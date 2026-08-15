@@ -1,31 +1,28 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./features/auth/AuthContext";
-import { useAuth } from "./hooks/useAuth";
-import { logoutUser } from "./services/authService";
+import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./pages/Login";
-
-function AppContent() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return <p>Cargando...</p>;
-  }
-
-  if (!user) {
-    return <Login />;
-  }
-
-  return (
-    <div>
-      <p>Sesión iniciada como: {user.email}</p>
-      <button onClick={() => logoutUser()}>Cerrar sesión</button>
-    </div>
-  );
-}
+import Register from "./pages/Register";
+import Tasks from "./pages/Tasks";
 
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/tasks"
+            element={
+              <ProtectedRoute>
+                <Tasks />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/tasks" replace />} />
+        </Routes>
+      </BrowserRouter>
     </AuthProvider>
   );
 }

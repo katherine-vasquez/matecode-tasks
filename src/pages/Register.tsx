@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { registerUser, getAuthErrorMessage } from "../services/authService";
 
 export default function Register() {
@@ -6,6 +7,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -23,6 +25,7 @@ export default function Register() {
     setLoading(true);
     try {
       await registerUser(email, password);
+      navigate("/tasks");
     } catch (err) {
       setError(getAuthErrorMessage(err));
     } finally {

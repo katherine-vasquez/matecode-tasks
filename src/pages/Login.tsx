@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser, getAuthErrorMessage } from "../services/authService";
 
 export default function Login() {
@@ -6,6 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -19,6 +21,7 @@ export default function Login() {
     setLoading(true);
     try {
       await loginUser(email, password);
+      navigate("/tasks");
     } catch (err) {
       setError(getAuthErrorMessage(err));
     } finally {
