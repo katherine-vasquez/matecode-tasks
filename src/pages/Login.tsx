@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser, getAuthErrorMessage } from "../services/authService";
 
 export default function Login() {
@@ -56,6 +56,9 @@ export default function Login() {
           {loading ? "Ingresando..." : "Ingresar"}
         </button>
       </form>
+      <p>
+        ¿No tenés cuenta? <Link to="/register">Registrate</Link>
+      </p>
     </div>
   );
 }
