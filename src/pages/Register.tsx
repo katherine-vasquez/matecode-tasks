@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser, getAuthErrorMessage } from "../services/authService";
 
 export default function Register() {
@@ -60,6 +60,9 @@ export default function Register() {
           {loading ? "Registrando..." : "Registrarme"}
         </button>
       </form>
+      <p>
+        ¿Ya tenés cuenta? <Link to="/login">Iniciá sesión</Link>
+      </p>
     </div>
   );
 }
